@@ -1,18 +1,32 @@
 package org.usfirst.frc.team2340.robot;
 
-import edu.wpi.first.wpilibj.buttons.Button;
-import org.usfirst.frc.team2340.robot.commands.ExampleCommand;
+import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Joystick;
+//import edu.wpi.first.wpilibj.buttons.Button;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    //// CREATING BUTTONS
-    // One type of button is a joystick button which is any button on a joystick.
-    // You create one by telling it which joystick it's on and which button
-    // number it is.
-    // Joystick stick = new Joystick(port);
+    public Joystick driveController = new Joystick(RobotMap.DRIVE_PORT);
+    public Joystick acquisitionController = new Joystick(RobotMap.ACQUISITION_PORT);
+    public AnalogGyro gyro = null;
+    
+    public CANTalon frontLeft;
+	public CANTalon backLeft;
+
+	public CANTalon backRight;
+	public CANTalon frontRight;
+	
+	public CANTalon arm;
+	public CANTalon aqWheels;
+    
+    ////CREATING BUTTONS
+   // One type of button is a joystick button which is any button on a joystick.
+   // You create one by telling it which joystick it's on and which button
+   // number it is.
     // Button button = new JoystickButton(stick, buttonNumber);
     
     // There are a few additional built in buttons you can use. Additionally,
