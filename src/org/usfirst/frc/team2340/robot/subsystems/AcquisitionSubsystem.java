@@ -2,7 +2,9 @@ package org.usfirst.frc.team2340.robot.subsystems;
 
 import org.usfirst.frc.team2340.robot.Robot;
 import org.usfirst.frc.team2340.robot.RobotMap;
-import org.usfirst.frc.team2340.robot.commands.AcquisitionCommandGroup;
+
+
+import org.usfirst.frc.team2340.robot.commands.ArmPositionCommand;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -40,7 +42,7 @@ public class AcquisitionSubsystem extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new AcquisitionCommandGroup());
+		setDefaultCommand(new ArmPositionCommand());
 	}
 	
 	public CANTalon getArmTalon(){

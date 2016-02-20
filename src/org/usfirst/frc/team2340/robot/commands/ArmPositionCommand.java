@@ -29,6 +29,17 @@ public class ArmPositionCommand extends Command {
 		else{
 			System.out.println("Button none pressed~");
 			Robot.acquisition.setArmPower(0); //this should stop it
+		}		double pwrlvl = 1;
+		if(controller.getRawButton(2)){ //TODO: magic number
+			pwrlvl = .5;
+		}
+		if(controller.getTrigger()){
+			Robot.acquisition.setBoulderMotor(pwrlvl);
+		}
+		else if(controller.getRawButton(7)){ //TODO: magic number, also it is already being used
+			Robot.acquisition.setBoulderMotor(-1 * pwrlvl);
+		}else{
+			Robot.acquisition.setBoulderMotor(0);
 		}
 	}
 

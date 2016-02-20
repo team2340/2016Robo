@@ -10,18 +10,17 @@ import edu.wpi.first.wpilibj.Joystick;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    public Joystick driveController = new Joystick(RobotMap.DRIVE_PORT);
-    public Joystick acquisitionController = new Joystick(RobotMap.ACQUISITION_PORT);
-    public AnalogGyro gyro = null;
-    
-    public CANTalon frontLeft;
-	public CANTalon backLeft;
-
-	public CANTalon backRight;
-	public CANTalon frontRight;
+	public Joystick driveController = new Joystick(RobotMap.DRIVE_PORT);
+	public Joystick acquisitionController = new Joystick(RobotMap.ACQUISITION_PORT);
+	public AnalogGyro gyro = null;
+   
+	public CANTalon frontLeft = null;
+	public CANTalon backLeft = null;
+	public CANTalon backRight = null;
+	public CANTalon frontRight = null;
 	
-	public CANTalon arm;
-	public CANTalon aqWheels;
+	public CANTalon arm = null;
+	public CANTalon aqWheels = null;
     
     ////CREATING BUTTONS
    // One type of button is a joystick button which is any button on a joystick.
@@ -49,4 +48,3 @@ public class OI {
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
 }
-

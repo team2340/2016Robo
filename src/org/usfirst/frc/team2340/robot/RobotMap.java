@@ -12,10 +12,10 @@ public class RobotMap {
 	
 /*TALON IDs*/
 	//Wheel Ids
-	public static final int BACK_RIGHT_TAL_ID = 2;
-	public static final int FRONT_RIGHT_TAL_ID = 3;
-	public static final int FRONT_LEFT_TAL_ID = 4;
-	public static final int BACK_LEFT_TAL_ID = 5;
+	public static final int BACK_RIGHT_TAL_ID = 2; //New 3 //Old 2
+	public static final int FRONT_RIGHT_TAL_ID = 3; //New 4 //Old 3
+	public static final int FRONT_LEFT_TAL_ID = 4;  //New 5 //Old 4
+	public static final int BACK_LEFT_TAL_ID = 5; //New 2 //Old 5
 	//Acquisition Ids
 	public static final int ARM_TAL_ID = 6;
 	public static final int AQ_WHEELS_TAL_ID = 7;
