@@ -3,8 +3,10 @@ package org.usfirst.frc.team2340.robot;
 
 import org.usfirst.frc.team2340.robot.RobotUtils.AutoMode;
 import org.usfirst.frc.team2340.robot.commands.AutoDriveForward;
+import org.usfirst.frc.team2340.robot.commands.AutoMoat;
 import org.usfirst.frc.team2340.robot.commands.CameraCommand;
 import org.usfirst.frc.team2340.robot.subsystems.*;
+
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -38,6 +40,7 @@ public class Robot extends IterativeRobot {
         
         autoMode.addDefault("DriveForward", AutoMode.DRIVE_FORWARD);
 		autoMode.addObject("Disabled", AutoMode.DISABLED);
+		autoMode.addObject("Moat", AutoMode.MOAT);
         SmartDashboard.putData("Auto mode", autoMode);
     }
 	
@@ -57,6 +60,10 @@ public class Robot extends IterativeRobot {
 
 		if (am == AutoMode.DRIVE_FORWARD) {
 			autonomousCommand = new AutoDriveForward();
+			if (autonomousCommand != null) autonomousCommand.start();
+		}
+		else if(am == AutoMode.MOAT){
+			autonomousCommand = new AutoMoat();
 			if (autonomousCommand != null) autonomousCommand.start();
 		}
 		else if (am == AutoMode.DISABLED) {} //Do Nothing if disabled

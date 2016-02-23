@@ -5,6 +5,7 @@ import org.usfirst.frc.team2340.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AcquisitionCommand extends Command {
 	private Joystick controller;
@@ -35,6 +36,7 @@ public class AcquisitionCommand extends Command {
 		}else{
 			Robot.acquisition.setBoulderMotor(0);
 		}
+		SmartDashboard.putBoolean("Ball Acquired", Robot.oi.aqWheels.isFwdLimitSwitchClosed());
 	}
 
 	@Override

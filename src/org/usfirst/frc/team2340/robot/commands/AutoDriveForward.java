@@ -23,17 +23,17 @@ public class AutoDriveForward extends Command {
 		if(angle > 0.1) //veering to the right
 		{
 			System.out.println("Go left!");
-			Robot.drive.setArcadeSpeed(0.2, 0.550); //go left
+			Robot.drive.setArcadeSpeed(0.2, 0.750); //go left
 		}
 		else if(angle < -0.1) //veering to the left
 		{
 			System.out.println("Go right!");
-			Robot.drive.setArcadeSpeed(-0.2, 0.550); //go right
+			Robot.drive.setArcadeSpeed(-0.2, 0.750); //go right
 		}
 		else
 		{
 			System.out.println("Go straight!");
-			Robot.drive.setArcadeSpeed(0, 0.550);
+			Robot.drive.setArcadeSpeed(0, 0.750);
 		}
 		SmartDashboard.putNumber("Auto Elapsed", elapsed);
 		SmartDashboard.putNumber("Gyro angle", angle);
@@ -41,7 +41,7 @@ public class AutoDriveForward extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return System.currentTimeMillis() -startTime >= 15000;
+		return System.currentTimeMillis() -startTime >= 2000; 
 	}
 
 	@Override

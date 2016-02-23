@@ -28,6 +28,7 @@ public class DriveSubsystem extends Subsystem {
 		createLeftSide();
 		createRightSide();
 		robotDrive = new RobotDrive(Robot.oi.frontLeft, Robot.oi.frontRight);
+		robotDrive.setSafetyEnabled(false);
 	}
 
 	private void createLeftSide() {

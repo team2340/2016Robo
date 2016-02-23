@@ -15,6 +15,7 @@ public class ArcadeDriveCommand extends Command {
 	
 	@Override
 	protected void initialize() {
+		
 	}
 
 	@Override
