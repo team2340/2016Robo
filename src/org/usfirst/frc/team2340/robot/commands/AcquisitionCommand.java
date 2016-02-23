@@ -1,13 +1,15 @@
 package org.usfirst.frc.team2340.robot.commands;
 
 import org.usfirst.frc.team2340.robot.Robot;
+import org.usfirst.frc.team2340.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ArmPositionCommand extends Command {
+public class AcquisitionCommand extends Command {
 	private Joystick controller;
 	
-	public ArmPositionCommand(){
+	public AcquisitionCommand(){
 		requires(Robot.acquisition);
 	}
 	
@@ -18,25 +20,17 @@ public class ArmPositionCommand extends Command {
 
 	@Override
 	protected void execute() {
-		if(controller.getRawButton(5)){ //TODO: magic number
-			System.out.println("Button five pressed~~");
-			Robot.acquisition.setArmPower(1); //this is for forward
-		}
-		else if(controller.getRawButton(6)){ //TODO: magic number
-			System.out.println("Button six pressed~");			
-			Robot.acquisition.setArmPower(-1); //this is for back
-		}
-		else{
-			System.out.println("Button none pressed~");
-			Robot.acquisition.setArmPower(0); //this should stop it
-		}		double pwrlvl = 1;
-		if(controller.getRawButton(2)){ //TODO: magic number
+		double z = (3-controller.getZ())/2;
+		double y = controller.getY()/z;
+		Robot.acquisition.setArmPower(y);
+		double pwrlvl = 1;
+		if(controller.getRawButton(RobotMap.BUTTON_2)){ 
 			pwrlvl = .5;
 		}
 		if(controller.getTrigger()){
 			Robot.acquisition.setBoulderMotor(pwrlvl);
 		}
-		else if(controller.getRawButton(7)){ //TODO: magic number, also it is already being used
+		else if(controller.getRawButton(RobotMap.BUTTON_7)){ 
 			Robot.acquisition.setBoulderMotor(-1 * pwrlvl);
 		}else{
 			Robot.acquisition.setBoulderMotor(0);

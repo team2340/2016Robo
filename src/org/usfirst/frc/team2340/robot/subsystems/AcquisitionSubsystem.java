@@ -2,9 +2,7 @@ package org.usfirst.frc.team2340.robot.subsystems;
 
 import org.usfirst.frc.team2340.robot.Robot;
 import org.usfirst.frc.team2340.robot.RobotMap;
-
-
-import org.usfirst.frc.team2340.robot.commands.ArmPositionCommand;
+import org.usfirst.frc.team2340.robot.commands.AcquisitionCommand;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -42,24 +40,18 @@ public class AcquisitionSubsystem extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new ArmPositionCommand());
+		setDefaultCommand(new AcquisitionCommand());
 	}
 	
 	public CANTalon getArmTalon(){
 		return Robot.oi.arm;
 	}
 
-	public void setArmPower(int power){
+	public void setArmPower(double power){
 		Robot.oi.arm.set(power);
 	}
 	
 	public void setBoulderMotor(double speed){
-		Robot.oi.aqWheels.set(speed); //TODO: is this right? I changed it from arm to aqWheels
-	}
-	
-	public void open2(){
-	}
-	
-	public void close2(){
+		Robot.oi.aqWheels.set(speed);
 	}
 }

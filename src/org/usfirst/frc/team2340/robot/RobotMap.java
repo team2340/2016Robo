@@ -6,6 +6,9 @@ package org.usfirst.frc.team2340.robot;
  * floating around.
  */
 public class RobotMap {
+//magic numbers~~
+	public static final int BUTTON_2 = 2; 
+	public static final int BUTTON_7 = 7;
 /*Controller Ports*/
 	public static final int DRIVE_PORT = 1;
 	public static final int ACQUISITION_PORT = 2;

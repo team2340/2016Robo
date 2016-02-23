@@ -19,7 +19,6 @@ public class ArcadeDriveCommand extends Command {
 
 	@Override
 	protected void execute() {
-		System.out.println(" Third Speed");
 		double z = (3-controller.getZ())/2;
 		double x = -controller.getX()/z;
 		double y = -controller.getY()/z;

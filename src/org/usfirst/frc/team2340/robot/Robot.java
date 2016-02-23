@@ -21,10 +21,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	public static OI oi;
-
+	public static final OI oi = new OI();
 	public static final DriveSubsystem drive = DriveSubsystem.getInstance();
-	public static final AcquisitionSubsystem acquisition =  AcquisitionSubsystem.getInstance();
+	public static final AcquisitionSubsystem acquisition  =  AcquisitionSubsystem.getInstance();
 	
     Command autonomousCommand = null;
     Command cameraCommand = null;
@@ -35,8 +34,7 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new OI();
-        oi.gyro = new AnalogGyro(RobotMap.GYRO_CHANNEL);
+        oi.gyro = new AnalogGyro(RobotMap.GYRO_CHANNEL );
         
         autoMode.addDefault("DriveForward", AutoMode.DRIVE_FORWARD);
 		autoMode.addObject("Disabled", AutoMode.DISABLED);
