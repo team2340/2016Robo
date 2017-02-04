@@ -9,6 +9,8 @@ public class RobotMap {
 //magic numbers~~
 	public static final int BUTTON_2 = 2; 
 	public static final int BUTTON_7 = 7;
+	public static final int BUTTON_3 = 3;
+	public static final int BUTTON_4 = 4;
 /*Controller Ports*/
 	public static final int DRIVE_PORT = 1;
 	public static final int ACQUISITION_PORT = 2;
@@ -24,5 +26,7 @@ public class RobotMap {
 	public static final int AQ_WHEELS_TAL_ID = 7;
 
 /*Analog Channels*/
+	/*the adxl345 gyro pinout is signal pin closest to word "rate" on the pcb, the
+	 *ground is closest to the edge of the pcb   */
 	public static final int GYRO_CHANNEL = 0;
 }

@@ -1,7 +1,10 @@
 package org.usfirst.frc.team2340.robot;
 
+import com.ctre.CANTalon;
+
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANSpeedController;
 import edu.wpi.first.wpilibj.Joystick;
 //import edu.wpi.first.wpilibj.buttons.Button;
 
@@ -12,7 +15,7 @@ import edu.wpi.first.wpilibj.Joystick;
 public class OI {
 	public Joystick driveController = new Joystick(RobotMap.DRIVE_PORT);
 	public Joystick acquisitionController = new Joystick(RobotMap.ACQUISITION_PORT);
-	public AnalogGyro gyro = null;
+	public ADXRS450_Gyro gyro = null;
    
 	public CANTalon frontLeft = null;
 	public CANTalon backLeft = null;
@@ -21,6 +24,7 @@ public class OI {
 	
 	public CANTalon arm = null;
 	public CANTalon aqWheels = null;
+	
     
     ////CREATING BUTTONS
    // One type of button is a joystick button which is any button on a joystick.

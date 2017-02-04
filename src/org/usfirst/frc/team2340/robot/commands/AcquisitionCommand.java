@@ -21,8 +21,8 @@ public class AcquisitionCommand extends Command {
 
 	@Override
 	protected void execute() {
-		double z = (3-controller.getZ())/2;
-		double y = controller.getY()/z;
+		double z = (3-controller.getZ())/8;
+		double y = -controller.getY()*z;
 		Robot.acquisition.setArmPower(y);
 		double pwrlvl = 1;
 		if(controller.getRawButton(RobotMap.BUTTON_2)){ 

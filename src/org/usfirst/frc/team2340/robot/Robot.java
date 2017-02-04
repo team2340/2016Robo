@@ -7,7 +7,11 @@ import org.usfirst.frc.team2340.robot.commands.AutoMoat;
 import org.usfirst.frc.team2340.robot.commands.CameraCommand;
 import org.usfirst.frc.team2340.robot.subsystems.*;
 
+import com.ctre.CANTalon;
+
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -36,7 +40,7 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-        oi.gyro = new AnalogGyro(RobotMap.GYRO_CHANNEL );
+        oi.gyro = new ADXRS450_Gyro();
         
         autoMode.addDefault("DriveForward", AutoMode.DRIVE_FORWARD);
 		autoMode.addObject("Disabled", AutoMode.DISABLED);
@@ -56,8 +60,10 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         oi.gyro.reset();
+        Robot.oi.frontRight.setPosition(0);
+        Robot.oi.frontLeft.setPosition(0);
 		AutoMode am = (AutoMode) autoMode.getSelected();
-
+		
 		if (am == AutoMode.DRIVE_FORWARD) {
 			autonomousCommand = new AutoDriveForward();
 			if (autonomousCommand != null) autonomousCommand.start();
@@ -67,6 +73,10 @@ public class Robot extends IterativeRobot {
 			if (autonomousCommand != null) autonomousCommand.start();
 		}
 		else if (am == AutoMode.DISABLED) {} //Do Nothing if disabled
+		
+		autonomousCommand = new AutoMoat();
+		autonomousCommand = new AutoDriveForward();
+		if (autonomousCommand != null) autonomousCommand.start();
     }
 
     public void autonomousPeriodic() {
@@ -75,7 +85,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
-		cameraCommand = new CameraCommand();
+        cameraCommand = new CameraCommand();
 		cameraCommand.start();
     }
 

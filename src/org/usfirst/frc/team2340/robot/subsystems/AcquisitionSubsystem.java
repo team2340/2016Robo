@@ -4,7 +4,8 @@ import org.usfirst.frc.team2340.robot.Robot;
 import org.usfirst.frc.team2340.robot.RobotMap;
 import org.usfirst.frc.team2340.robot.commands.AcquisitionCommand;
 
-import edu.wpi.first.wpilibj.CANTalon;
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class AcquisitionSubsystem extends Subsystem {
