@@ -69,8 +69,6 @@ public class ArcadeDriveCommand extends Command {
 		
 		Robot.drive.setArcadeSpeed(x, y);
 		SmartDashboard.putNumber("Gyro Angle Teleop", angle);
-		SmartDashboard.putNumber("left encoder val11", Robot.oi.frontLeft.getEncPosition());
-		SmartDashboard.putNumber("right encoder val22", Robot.oi.frontRight.getEncPosition());
 
 	}
 
