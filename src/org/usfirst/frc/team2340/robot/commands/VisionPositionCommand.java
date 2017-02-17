@@ -16,6 +16,7 @@ public class VisionPositionCommand extends Command {
   @Override
   protected void initialize() {
     startTime = System.currentTimeMillis();
+    Robot.drive.changeMode(TalonDataUtils.GetVbusData());
   }
   
   @Override
