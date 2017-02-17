@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2340.robot.commands;
 
 import org.usfirst.frc.team2340.robot.Robot;
+import org.usfirst.frc.team2340.robot.subsystems.TalonDataUtils;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -96,6 +98,7 @@ public class AutoDriveForward extends Command {
 
 	@Override
 	protected void end() {
+	  Robot.drive.changeMode(TalonDataUtils.GetVbusData());
 		Robot.drive.setArcadeSpeed(0, 0);
 	}
 

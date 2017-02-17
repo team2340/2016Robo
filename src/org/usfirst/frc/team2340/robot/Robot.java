@@ -9,6 +9,7 @@ import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team2340.robot.RobotUtils.AutoMode;
 import org.usfirst.frc.team2340.robot.commands.AutoDriveForward;
 import org.usfirst.frc.team2340.robot.commands.CameraCommand;
+import org.usfirst.frc.team2340.robot.commands.VisionPositionCommand;
 import org.usfirst.frc.team2340.robot.subsystems.*;
 
 import edu.wpi.cscore.UsbCamera;
@@ -53,36 +54,11 @@ public class Robot extends IterativeRobot {
 
     autoMode.addDefault("DriveForward", AutoMode.DRIVE_FORWARD);
     autoMode.addObject("Disabled", AutoMode.DISABLED);
-    autoMode.addObject("Moat", AutoMode.MOAT);
     SmartDashboard.putData("Auto mode", autoMode);
 
     cameraCommand = new CameraCommand();
-  }
-
-  public void disabledInit(){
-  }
-
-  public void disabledPeriodic() {
-    Scheduler.getInstance().run();
-  }
-
-  public void autonomousInit() {
-    cameraCommand.start();
-
-    oi.gyro.reset();
-    Robot.oi.frontRight.setPosition(0);
-    Robot.oi.frontLeft.setPosition(0);
-    AutoMode am = (AutoMode) autoMode.getSelected();
-
-    if (am == AutoMode.DRIVE_FORWARD) {
-      autonomousCommand = new AutoDriveForward();
-      if (autonomousCommand != null) autonomousCommand.start();
-    }
-    else if (am == AutoMode.DISABLED) {} //Do Nothing if disabled
-
-    if (autonomousCommand != null) autonomousCommand.start();
     
-SmartDashboard.putNumber("CenterX", 0);
+    SmartDashboard.putNumber("CenterX", 0);
     
     grip = new GripPipeline();
     
@@ -117,6 +93,33 @@ SmartDashboard.putNumber("CenterX", 0);
       }
     });
     visionThread.start();
+  }
+
+  public void disabledInit(){
+  }
+
+  public void disabledPeriodic() {
+    Scheduler.getInstance().run();
+  }
+
+  public void autonomousInit() {
+    Robot.drive.changeMode(TalonDataUtils.GetPositionData());
+    
+    cameraCommand.start();
+
+    oi.gyro.reset();
+    Robot.oi.frontRight.setPosition(0);
+    Robot.oi.frontLeft.setPosition(0);
+//    AutoMode am = (AutoMode) autoMode.getSelected();
+//
+//    if (am == AutoMode.DRIVE_FORWARD) {
+//      autonomousCommand = new AutoDriveForward();
+//      if (autonomousCommand != null) autonomousCommand.start();
+//    }
+//    else if (am == AutoMode.DISABLED) {} //Do Nothing if disabled
+
+    autonomousCommand = new VisionPositionCommand();
+    if (autonomousCommand != null) autonomousCommand.start();
   }
 
   public void autonomousPeriodic() {

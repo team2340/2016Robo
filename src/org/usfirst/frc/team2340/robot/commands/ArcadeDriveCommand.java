@@ -69,7 +69,6 @@ public class ArcadeDriveCommand extends Command {
 		
 		Robot.drive.setArcadeSpeed(x, y);
 		SmartDashboard.putNumber("Gyro Angle Teleop", angle);
-
 	}
 
 	@Override
