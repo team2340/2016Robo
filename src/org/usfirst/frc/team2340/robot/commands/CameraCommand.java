@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CameraCommand extends Command {
 	UsbCamera curCam, camera0, camera1;
-	int intcam1, intcam0;
 	Joystick controller;
 	boolean buttonPressed = false;
 	VideoSink server;
@@ -20,10 +19,10 @@ public class CameraCommand extends Command {
 	public CameraCommand(){
 		controller = Robot.oi.driveController;
 
-		intcam0 = 0;
-		intcam1 = 1;
+		int intcam0 = 0;
+		int intcam1 = 1;
 		
-	    camera0 = new UsbCamera("USB Camera " + intcam0, intcam0);    
+		camera0 = new UsbCamera("USB Camera " + intcam0, intcam0);    
 	    CameraServer.getInstance().addCamera(camera0);
 	    server = CameraServer.getInstance().addServer("serve_" + camera0.getName());
 	    server.setSource(camera0);
@@ -33,6 +32,7 @@ public class CameraCommand extends Command {
 
 		curCam = camera0;
 		SmartDashboard.putString("Current Cam", curCam.getName());
+		buttonPressed = false;
 	}
 	@Override
 	protected void initialize() {
@@ -65,6 +65,10 @@ public class CameraCommand extends Command {
 
 	@Override
 	protected void interrupted() {
+	
+	}
+	public UsbCamera getcamera(){
+		return curCam;
 	}
 	
 	public void switchView(){

@@ -1,94 +1,109 @@
 package org.usfirst.frc.team2340.robot.commands;
 
 import org.usfirst.frc.team2340.robot.Robot;
+import org.usfirst.frc.team2340.robot.RobotUtils;
+
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoDriveForward extends Command {
 	long startTime = 0;
-	boolean rAtz = false;
-	boolean lAtz = false;
-	
-	
+	boolean rDone, lDone, rotationComplete, inMotion;
+	double desiredSpot = 0;
+
 	public AutoDriveForward() {
 		requires(Robot.drive);
 	}
-	
+
 	@Override
 	protected void initialize() {
 		startTime = System.currentTimeMillis();
-			Robot.oi.frontLeft.set(60);
-			Robot.oi.frontRight.set(60);
+		rotationComplete= false;
+		lDone = rDone = false;
+		inMotion = false;
+		desiredSpot = RobotUtils.getEncPositionFromIN(RobotUtils.distanceMinusRobot(88));
+		Robot.oi.frontLeft.set(desiredSpot);
+		Robot.oi.frontRight.set(-desiredSpot);
 	}
 	@Override
 	protected void execute() {
 		double angle = Robot.oi.gyro.getAngle();
 		long elapsed = (System.currentTimeMillis() - startTime)/1000;
-//		if(angle > 0.1) //veering to the right
-//		{
-//			System.out.println("Go left!");
-//			Robot.drive.setArcadeSpeed(0.2, 0.750); //go left
-//		}
-//		else if(angle < -0.1) //veering to the left
-//		{
-//			System.out.println("Go right!");
-//			Robot.drive.setArcadeSpeed(-0.2, 0.750); //go right
-//		}
-//		else
-//		{
-//			System.out.println("Go straight!");
-//			Robot.drive.setArcadeSpeed(0, 0.750);
-//		}
-		//SmartDashboard.putNumber("left encoder val11", Robot.oi.frontLeft.getPosition());
-		//SmartDashboard.putNumber("right encoder val22", Robot.oi.frontRight.getPosition());
-		
-		SmartDashboard.putNumber("left speed", Robot.oi.frontLeft.getSpeed());
+
 		SmartDashboard.putNumber("left position", Robot.oi.frontLeft.getPosition());
-		
-//		if(Robot.oi.frontLeft.getPosition()<=2.7){
-//			Robot.oi.frontLeft.set(200);
-//			Robot.oi.frontRight.set(200);
-//		}
-		if(Robot.oi.frontLeft.getPosition()>=2.7){
-			Robot.oi.frontLeft.set(0);
-			lAtz = true;
-		}
-		if(Robot.oi.frontRight.getPosition()<=-2.7){
-			Robot.oi.frontRight.set(0);
-			rAtz = true;
-		}
-		if(Robot.oi.frontLeft.getPosition()>=2.2&&Robot.oi.frontLeft.getPosition()<=2.7){
-			Robot.oi.frontLeft.set(10);
-			
-		}
-		if(Robot.oi.frontRight.getPosition()<=-2.2&&Robot.oi.frontRight.getPosition()>=-2.7){
-			Robot.oi.frontRight.set(10);
-		}
-		if(lAtz && rAtz) {
-			boolean finshed=Rotateright();
-			if(finshed==true){
-				 
-			}
-		}
-		
+		SmartDashboard.putNumber("right position ",Robot.oi.frontRight.getPosition()); 
+
 		SmartDashboard.putNumber("Auto Elapsed", elapsed);
 		SmartDashboard.putNumber("Gyro angle", angle);
+		if (!lDone || !rDone) {
+			if(Robot.oi.frontRight.getPosition()<=-desiredSpot){
+				Robot.oi.frontRight.setPosition(0);
+				Robot.oi.frontRight.set(0);
+				rDone = true;
+			}
+			if(Robot.oi.frontLeft.getPosition()>=desiredSpot){
+				Robot.oi.frontLeft.setPosition(0);
+				Robot.oi.frontLeft.set(0);
+				lDone = true;
+			}
+		}
+		if(rotationComplete && !inMotion){
+			Robot.drive.setForPosition();
+			desiredSpot = RobotUtils.getEncPositionFromIN(Robot.drive.finalDistance- 0);
+			Robot.oi.frontLeft.set(desiredSpot);
+			Robot.oi.frontRight.set(-desiredSpot);
+			inMotion = true;
+		}
+
+		if(rDone && lDone && !rotationComplete){
+			Robot.drive.setForSpeed();
+			rotationComplete= adjustRotation();
+			if(!rotationComplete)
+			{
+				System.out.println("Adjusting...");
+			}
+		}
 	} 
 
-	boolean Rotateright(){
-		Robot.oi.frontLeft.set(10);
-		Robot.oi.frontRight.set(-10);
-		double angle = Robot.oi.gyro.getAngle();
-		if(angle >=90){
-			Robot.oi.frontLeft.set(0);
-			Robot.oi.frontRight.set(0);
-			return true;
+	private boolean adjustRotation()
+	{
+		//CENTER IS 320
+		if ( Robot.drive.centerX != -1 ) {
+			if(Robot.drive.centerX > 340) { //+rotate: go right
+				System.out.println("Adjusting 330 " + Robot.drive.centerX);
+				rotateRight(40);
+			}
+			else if(Robot.drive.centerX < 310){ //-rotate: go left
+				System.out.println("Adjusting 310 "  + Robot.drive.centerX);
+				rotateLeft(40);
+			}
+			else{
+				System.out.println("Good Enough!");
+				setSpeed(0);
+				return true;
+			}
+		} else {
+			setSpeed(0);
+			System.out.println("Nothing detected");
 		}
-		else{
-			return false;
-		}
+
+		return false;
 	}
-	
+	void setSpeed(double rpm) {
+		Robot.oi.frontLeft.set(+rpm);
+		Robot.oi.frontRight.set(-rpm);
+	}
+	void rotateRight(double rpm) {
+		Robot.oi.frontLeft.set(rpm);
+		Robot.oi.frontRight.set(rpm);
+	}
+	void rotateLeft(double rpm) {
+		Robot.oi.frontLeft.set(-rpm);
+		Robot.oi.frontRight.set(-rpm);
+	}
+
 	@Override
 	protected boolean isFinished() {
 		return System.currentTimeMillis() -startTime >= 15000; 
@@ -96,7 +111,7 @@ public class AutoDriveForward extends Command {
 
 	@Override
 	protected void end() {
-		Robot.drive.setArcadeSpeed(0, 0);
+		Robot.drive.setForVBus();
 	}
 
 	@Override

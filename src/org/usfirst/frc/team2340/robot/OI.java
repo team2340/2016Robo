@@ -25,6 +25,8 @@ public class OI {
 	public CANTalon arm = null;
 	public CANTalon aqWheels = null;
 	
+	public final double IMG_WIDTH = 640.0;
+	public final double IMG_HEIGHT = 480.0;
     
     ////CREATING BUTTONS
    // One type of button is a joystick button which is any button on a joystick.
